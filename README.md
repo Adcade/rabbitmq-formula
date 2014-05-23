@@ -1,0 +1,4 @@
+rabbitmq-formula
+================
+
+RabbitMQ Formula
