@@ -1,8 +1,10 @@
 # RabbitMQ is not supported well at the moment.
 {% set plugins = salt['pillar.get']('rabbitmq:plugins') -%}
 {% set version = salt['pillar.get']('rabbitmq:version') -%}
-{% set user = salt['pillar.get']('rabbitmq:user') -%}
-{% set password = salt['pillar.get']('rabbitmq:password') -%}
+{% set user = salt['pillar.get']('rabbitmq:user', 'rabbitmq') -%}
+{% set password = salt['pillar.get']('rabbitmq:password', 'rabbitmq') -%}
+
+{% if version is not none %}
 
 rabbitmq_ppa:
   pkgrepo.managed:
@@ -18,9 +20,9 @@ rabbitmq-service:
   service.running:
     - name: rabbitmq-server
 
-rabbitmq_user:
+{{ user }}:
   rabbitmq_user.present:
-    - name: {{ user }}
+    - name: {{ user }} # RabbitMQ module does not respect this name.
     - password: {{ password }}
     - force: True
     - tags: administrator
@@ -40,4 +42,4 @@ rabbitmq_user:
     - enabled
 {% endfor %}
 
-
+{% endif %}
