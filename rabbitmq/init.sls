@@ -1,6 +1,6 @@
 # RabbitMQ is not supported well at the moment.
 {% set plugins = salt['pillar.get']('rabbitmq:plugins') -%}
-{% set version = salt['pillar.get']('rabbitmq:version') -%}
+{% set version = salt['pillar.get']('rabbitmq:version', none) -%}
 {% set user = salt['pillar.get']('rabbitmq:user', 'rabbitmq') -%}
 {% set password = salt['pillar.get']('rabbitmq:password', 'rabbitmq') -%}
 
